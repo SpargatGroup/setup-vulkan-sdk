@@ -69,7 +69,7 @@ runs:
     # cache
     - name: Cache Vulkan SDK
       if: inputs.cache == 'true'
-      uses: actions/cache@v4
+      uses: actions/cache@v4.2.2
       with:
         path: |
           ${{ runner.os == 'Windows' && 'C:\\VulkanSDK\\$VERSION_VULKAN_TO_DOWNLOAD' || '' }}

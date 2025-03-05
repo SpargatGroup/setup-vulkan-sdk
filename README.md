@@ -10,7 +10,7 @@
 
 ### Build status
 
-[![Setup Vulkan SDK workflow build status](https://github.com/SpargatGroup/setup-vulkan-sdk/actions/workflows/test.yml/badge.svg)](https://github.com/SpargatGroup/setup-vulkan-sdk/actions)
+[![Setup Vulkan SDK workflow build status](https://github.com/SpargatGroup/setup-vulkan-sdk/actions/workflows/test.yaml/badge.svg)](https://github.com/SpargatGroup/setup-vulkan-sdk/actions)
 
 ### You can see the extension on Marketplace [https://github.com/marketplace/actions/setup-vulkan-sdk-multiplatform](here)
 
@@ -38,4 +38,18 @@
           version: 'latest'  # Vulkan SDK version you want
           components: 'Vulkan-Headers,Vulkan-Loader'  # Vulkan components you need
           cache: 'true'  # Vulkan Cache
+```
+
+## Test Vulkan SDK
+
+### For download path
+
+```bash
+echo $VULKAN_SDK
+```
+
+### For version downloaded
+
+```bash
+echo $VERSION_VULKAN_TO_DOWNLOAD
 ```
