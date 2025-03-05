@@ -63,7 +63,9 @@ runs:
       run: |
         curl -LO https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/mac/vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD.zip
         unzip vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD.zip -d /Applications/VulkanSDK
-        brew install ${{ inputs.components }}
+        if [[ "${{ input.components"}} == "Vulkan-Headers"]]; then
+          brew install vulkan-validation-layers
+        fi
         ls /Applications/VulkanSDK/vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD
         echo "VULKAN_SDK=/Applications/VulkanSDK/$VERSION_VULKAN_TO_DOWNLOAD/macOS" >> $GITHUB_ENV
         echo "PATH=$VULKAN_SDK/bin:$PATH" >> $GITHUB_ENV
