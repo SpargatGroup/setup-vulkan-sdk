@@ -1,12 +1,8 @@
 name: 'Test Vulkan SDK Installation'
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  - push
+  - pull_request
 
 jobs:
   install-vulkan-sdk:
