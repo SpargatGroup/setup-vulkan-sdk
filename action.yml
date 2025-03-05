@@ -64,7 +64,7 @@ runs:
         curl -LO https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/mac/vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD.zip
         unzip vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD.zip -d /Applications/VulkanSDK
         if [[ "${{ inputs.components }}" == *"Vulkan-Headers"* ]]; then
-          brew install vulkan-validation-layers
+          brew install vulkan-validationlayers
         fi
         for component in $(echo "${{ inputs.components }}" | tr ',' ' '); do
           if [[ "$component" != "Vulkan-Headers" ]]; then
