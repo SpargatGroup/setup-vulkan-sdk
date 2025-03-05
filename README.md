@@ -8,6 +8,10 @@
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/SpargatTeam/setup-vulkan-sdk)
 
+### Build status
+
+[![Setup Vulkan SDK workflow build status](https://github.com/SpargatGroup/setup-vulkan-sdk/actions/workflows/test.yml/badge.svg)](https://github.com/SpargatGroup/setup-vulkan-sdk/actions)
+
 ### You can see the extension on Marketplace [https://github.com/marketplace/actions/setup-vulkan-sdk-multiplatform](here)
 
 ### Working perfect for Linux and Windows, good for macos but no components extra
