@@ -21,14 +21,25 @@ runs:
       shell: bash
       run: echo "Running on $RUNNER_OS"
 
+    # check version
+    - name: Version setup
+      shell: bash
+      run: |
+          if [[ "${{ inputs.version }}" == "latest" ]]; then
+            VERSION_VULKAN_TO_DOWNLOAD="1.4.304.1"
+          else
+            VERSION_VULKAN_TO_DOWNLOAD="${{ inputs.version }}"
+          fi
+          echo "VERSION_VULKAN_TO_DOWNLOAD=$VERSION_VULKAN_TO_DOWNLOAD" >> $GITHUB_ENV
+
     # windows
     - name: Download Vulkan SDK (Windows)
       if: runner.os == 'Windows'
       shell: bash
       run: |
-        curl -LO "https://sdk.lunarg.com/sdk/download/${{ inputs.version }}/windows/VulkanSDK-${{ inputs.version }}-Installer.exe"
-        start VulkanSDK-${{ inputs.version }}-Installer.exe /S /COMPONENTS="${{ inputs.components }}"
-        echo "VULKAN_SDK=C:\\VulkanSDK\\${{ inputs.version }}" >> $GITHUB_ENV
+        curl -LO "https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/windows/VulkanSDK-$VERSION_VULKAN_TO_DOWNLOAD-Installer.exe"
+        start VulkanSDK-$VERSION_VULKAN_TO_DOWNLOAD-Installer.exe /S /COMPONENTS="${{ inputs.components }}"
+        echo "VULKAN_SDK=C:\\VulkanSDK\\$VERSION_VULKAN_TO_DOWNLOAD" >> $GITHUB_ENV
         echo "Path=$VULKAN_SDK\\Bin;$Path" >> $GITHUB_ENV
 
     # linux
@@ -36,13 +47,13 @@ runs:
       if: runner.os == 'Linux'
       shell: bash
       run: |
-        curl -LO https://sdk.lunarg.com/sdk/download/${{ inputs.version }}/linux/vulkansdk-linux-x86_64-${{ inputs.version }}.tar.xz
+        curl -LO https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/linux/vulkansdk-linux-x86_64-$VERSION_VULKAN_TO_DOWNLOAD.tar.xz
         sudo mkdir -p /opt/VulkanSDK
-        sudo tar -xvf vulkansdk-linux-x86_64-${{ inputs.version }}.tar.xz -C /opt/VulkanSDK
-        echo "VULKAN_SDK=/opt/VulkanSDK/${{ inputs.version }}/x86_64" >> $GITHUB_ENV
+        sudo tar -xvf vulkansdk-linux-x86_64-$VERSION_VULKAN_TO_DOWNLOAD.tar.xz -C /opt/VulkanSDK
+        echo "VULKAN_SDK=/opt/VulkanSDK/$VERSION_VULKAN_TO_DOWNLOAD/x86_64" >> $GITHUB_ENV
         echo "PATH=$VULKAN_SDK/bin:$PATH" >> $GITHUB_ENV
         if [ -n "${{ inputs.components }}" ]; then
-          sudo bash /opt/VulkanSDK/${{ inputs.version }}/setup-env.sh --install-components "${{ inputs.components }}"
+          sudo bash /opt/VulkanSDK/$VERSION_VULKAN_TO_DOWNLOAD/setup-env.sh --install-components "${{ inputs.components }}"
         fi
 
     # macos
@@ -50,9 +61,9 @@ runs:
       if: runner.os == 'macOS'
       shell: bash
       run: |
-        curl -LO https://sdk.lunarg.com/sdk/download/${{ inputs.version }}/mac/vulkansdk-macos-${{ inputs.version }}.zip
-        unzip vulkansdk-macos-${{ inputs.version }}.zip -d /Applications/VulkanSDK
-        echo "VULKAN_SDK=/Applications/VulkanSDK/${{ inputs.version }}/macOS" >> $GITHUB_ENV
+        curl -LO https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/mac/vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD.zip
+        unzip vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD.zip -d /Applications/VulkanSDK
+        echo "VULKAN_SDK=/Applications/VulkanSDK/$VERSION_VULKAN_TO_DOWNLOAD/macOS" >> $GITHUB_ENV
         echo "PATH=$VULKAN_SDK/bin:$PATH" >> $GITHUB_ENV
 
     # cache
@@ -61,7 +72,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: |
-          ${{ runner.os == 'Windows' && 'C:\\VulkanSDK\\${{ inputs.version }}' || '' }}
-          ${{ runner.os == 'Linux' && '/opt/VulkanSDK/${{ inputs.version }}/x86_64' || '' }}
-          ${{ runner.os == 'macOS' && '/Applications/VulkanSDK/${{ inputs.version }}/macOS' || '' }}
-        key: vulkan-sdk-${{ inputs.version }}-${{ runner.os }}
+          ${{ runner.os == 'Windows' && 'C:\\VulkanSDK\\$VERSION_VULKAN_TO_DOWNLOAD' || '' }}
+          ${{ runner.os == 'Linux' && '/opt/VulkanSDK/$VERSION_VULKAN_TO_DOWNLOAD/x86_64' || '' }}
+          ${{ runner.os == 'macOS' && '/Applications/VulkanSDK/$VERSION_VULKAN_TO_DOWNLOAD/macOS' || '' }}
+        key: vulkan-sdk-$VERSION_VULKAN_TO_DOWNLOAD-${{ runner.os }}

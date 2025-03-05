@@ -1,6 +1,6 @@
 # Setup Vulkan SDK
 
-## Made by SpargatTeam for help BlockmanLORD production for Vulkan.
+## Made by SpargatGroup.
 
 ## Informations of the project
 
@@ -18,7 +18,7 @@
 
 ``` yaml
       - name: Setup Vulkan SDK # action name
-        uses: SpargatTeam/setup-vulkan-sdk@v1.0.0
+        uses: SpargatGroup/setup-vulkan-sdk@v1.0.0
         with:
           version: '1.3.296.0'  # Vulkan SDK version you want
           components: 'Vulkan-Headers,Vulkan-Loader'  # Vulkan components you need
@@ -29,9 +29,9 @@
 
 ``` yaml
       - name: Setup Vulkan SDK # action name
-        uses: SpargatTeam/setup-vulkan-sdk@latest
+        uses: SpargatGroup/setup-vulkan-sdk@latest
         with:
-          version: '1.3.296.0'  # Vulkan SDK version you want
+          version: 'latest'  # Vulkan SDK version you want
           components: 'Vulkan-Headers,Vulkan-Loader'  # Vulkan components you need
           cache: 'true'  # Vulkan Cache
 ```
