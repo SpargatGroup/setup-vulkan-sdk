@@ -67,7 +67,7 @@ runs:
           brew install vulkan-validationlayers
         fi
         for component in $(echo "${{ inputs.components }}" | tr ',' ' '); do
-          if [[ "$component" != "Vulkan-Headers" ]]; then
+          if [[ "$component" != "Vulkan-Headers" && "$component" != "Vulkan-Loader" ]]; then
             brew install "$component"
           fi
         done
