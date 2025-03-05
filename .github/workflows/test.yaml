@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - name: Set up Vulkan SDK
-      uses: SpargatGroup/setup-vulkan-sdk@main
+      uses: SpargatGroup/setup-vulkan-sdk@latest
       with:
         version: ${{ matrix.version }}
         components: ${{ matrix.components }}
