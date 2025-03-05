@@ -22,7 +22,7 @@
 
 ``` yaml
       - name: Setup Vulkan SDK # action name
-        uses: SpargatGroup/setup-vulkan-sdk@v1.0.0
+        uses: SpargatGroup/setup-vulkan-sdk@v1.1.0
         with:
           version: '1.3.296.0'  # Vulkan SDK version you want
           components: 'Vulkan-Headers,Vulkan-Loader'  # Vulkan components you need

@@ -63,8 +63,10 @@ runs:
       run: |
         curl -LO https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/mac/vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD.zip
         unzip vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD.zip -d /Applications/VulkanSDK
+        sudo installer -pkg /Applications/VulkanSDK/vulkansdk-macos-$VERSION_VULKAN_TO_DOWNLOAD/VulkanSDK.pkg -target /
+        brew install ${{ inputs.components }} -y
         echo "VULKAN_SDK=/Applications/VulkanSDK/$VERSION_VULKAN_TO_DOWNLOAD/macOS" >> $GITHUB_ENV
-        echo "PATH=$VULKAN_SDK/bin:$PATH" >> $GITHUB_ENV
+        echo "PATH=$VULKAN_SDK/bin:$PATH" >> $GITHUB_ENV\
 
     # cache
     - name: Cache Vulkan SDK
