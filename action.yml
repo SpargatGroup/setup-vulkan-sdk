@@ -22,7 +22,7 @@ runs:
       run: |
           if [[ "${{ inputs.version }}" == "latest" ]]; then
             page=$(curl -s https://sdk.lunarg.com/sdk/home)
-            VERSION_VULKAN_TO_DOWNLOAD=$(echo "$page" | sed -n 's/.*vulkansdk-macos-\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\.zip.*/\1/p' | head -n1)
+            VERSION_VULKAN_TO_DOWNLOAD=$(echo "$page" | grep -o '1\.4\.[0-9]\+\.[0-9]\+' | head -n1)
           else
             VERSION_VULKAN_TO_DOWNLOAD="${{ inputs.version }}"
           fi
