@@ -49,6 +49,10 @@ runs:
           FILE="VulkanSDK-$VERSION_VULKAN_TO_DOWNLOAD-Installer.exe"
         fi
         curl -LO "$BASE/$FILE"
+        if ! file "$FILE" | grep -q "PE32+ executable"; then
+          echo "This Vulkan SDK version is not compatible with Windows Server."
+          exit 1
+        fi
         start $FILE /S /COMPONENTS="${{ inputs.components }}"
         echo "VULKAN_SDK=C:\\VulkanSDK\\$VERSION_VULKAN_TO_DOWNLOAD" >> $GITHUB_ENV
         echo "Path=$VULKAN_SDK\\Bin;$Path" >> $GITHUB_ENV
