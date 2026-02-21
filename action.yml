@@ -22,7 +22,7 @@ runs:
       run: |
           if [[ "${{ inputs.version }}" == "latest" ]]; then
             page=$(curl -s https://sdk.lunarg.com/sdk/home)
-            latest_version=$(echo "$page" | grep -oP 'vulkansdk-macos-\K[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(?=\.zip)' | head -n1)
+            latest_version=$(echo "$page" | sed -n 's/.*vulkansdk-macos-\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\.zip.*/\1/p' | head -n1)
             echo "VERSION_VULKAN_TO_DOWNLOAD=$latest_version" >> $GITHUB_ENV
           else
             VERSION_VULKAN_TO_DOWNLOAD="${{ inputs.version }}"
