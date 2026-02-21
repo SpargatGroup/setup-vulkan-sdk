@@ -16,13 +16,23 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Version setup
+      shell: bash
+      run: |
+        case "${RUNNER_OS}" in
+          Linux) os="linux" ;;
+          macOS) os="mac" ;;
+          Windows) os="windows" ;;
+          *) echo "Uknown OS: ${RUNNER_OS}" ; exit 1 ;;
+        esac
     # check version
     - name: Version setup
       shell: bash
       run: |
           if [[ "${{ inputs.version }}" == "latest" ]]; then
-            page=$(curl -s https://sdk.lunarg.com/sdk/home)
-            VERSION_VULKAN_TO_DOWNLOAD=$(echo "$page" | grep -o '1\.4\.[0-9]\+\.[0-9]\+' | head -n1)
+            url="https://vulkan.lunarg.com/sdk/latest/$os.txt"
+            VERSION_VULKAN_TO_DOWNLOAD=$(curl -sL $url)
+            test -n "$VERSION_VULKAN_TO_DOWNLOAD" || { echo "could not resolve latest version"; exit 9; }
           else
             VERSION_VULKAN_TO_DOWNLOAD="${{ inputs.version }}"
           fi
