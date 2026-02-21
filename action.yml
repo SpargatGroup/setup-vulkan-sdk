@@ -31,9 +31,7 @@ runs:
       shell: bash
       run: |
           if [[ "${{ inputs.version }}" == "latest" ]]; then
-            url="https://vulkan.lunarg.com/sdk/latest/$os.txt"
-            VERSION_VULKAN_TO_DOWNLOAD=$(curl -sL $url)
-            test -n "$VERSION_VULKAN_TO_DOWNLOAD" || { echo "could not resolve latest version"; exit 9; }
+            VERSION_VULKAN_TO_DOWNLOAD=$(curl -s https://vulkan.lunarg.com/sdk/latest/$os.txt)
           else
             VERSION_VULKAN_TO_DOWNLOAD="${{ inputs.version }}"
           fi
