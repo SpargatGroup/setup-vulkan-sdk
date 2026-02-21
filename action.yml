@@ -25,6 +25,7 @@ runs:
           Windows) os="windows" ;;
           *) echo "Uknown OS: ${RUNNER_OS}" ; exit 1 ;;
         esac
+        echo "os is $os"
     # check version
     - name: Version setup
       shell: bash
