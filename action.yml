@@ -16,17 +16,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # detect os
-    - name: Detect OS
-      shell: bash
-      run: echo "Running on $RUNNER_OS"
-
     # check version
     - name: Version setup
       shell: bash
       run: |
           if [[ "${{ inputs.version }}" == "latest" ]]; then
-            VERSION_VULKAN_TO_DOWNLOAD="1.4.304.1"
+            VERSION_VULKAN_TO_DOWNLOAD="1.4.341.1"
           else
             VERSION_VULKAN_TO_DOWNLOAD="${{ inputs.version }}"
           fi
@@ -37,7 +32,12 @@ runs:
       if: runner.os == 'Windows'
       shell: bash
       run: |
-        curl -LO "https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/windows/VulkanSDK-$VERSION_VULKAN_TO_DOWNLOAD-Installer.exe"
+        newer=$(printf "%s\n%s\n" "${{ inputs.version }}" "1.4.309.0" | sort -V | tail -n1)
+        if [[ "$newer" == "$VERSION_VULKAN_TO_DOWNLOAD" ]]; then
+          curl -LO "https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/windows/VulkanSDK-X64-$VERSION_VULKAN_TO_DOWNLOAD-Installer.exe"
+        else
+          curl -LO "https://sdk.lunarg.com/sdk/download/$VERSION_VULKAN_TO_DOWNLOAD/windows/VulkanSDK-$VERSION_VULKAN_TO_DOWNLOAD-Installer.exe"
+        fi
         start VulkanSDK-$VERSION_VULKAN_TO_DOWNLOAD-Installer.exe /S /COMPONENTS="${{ inputs.components }}"
         echo "VULKAN_SDK=C:\\VulkanSDK\\$VERSION_VULKAN_TO_DOWNLOAD" >> $GITHUB_ENV
         echo "Path=$VULKAN_SDK\\Bin;$Path" >> $GITHUB_ENV
