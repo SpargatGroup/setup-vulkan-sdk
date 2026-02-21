@@ -21,7 +21,9 @@ runs:
       shell: bash
       run: |
           if [[ "${{ inputs.version }}" == "latest" ]]; then
-            VERSION_VULKAN_TO_DOWNLOAD="1.4.341.1"
+            page=$(curl -s https://sdk.lunarg.com/sdk/home)
+            latest_version=$(echo "$page" | grep -oP 'vulkansdk-macos-\K[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(?=\.zip)' | head -n1)
+            echo "VERSION_VULKAN_TO_DOWNLOAD=$latest_version" >> $GITHUB_ENV
           else
             VERSION_VULKAN_TO_DOWNLOAD="${{ inputs.version }}"
           fi

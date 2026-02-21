@@ -24,4 +24,6 @@ jobs:
         cache: 'true'
         
     - name: Test Vulkan SDK
-      run: echo $VULKAN_SDK
+      run: |
+        echo $VULKAN_SDK
+        echo $VERSION_VULKAN_TO_DOWNLOAD
